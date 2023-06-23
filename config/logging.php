@@ -4,6 +4,7 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
+use Illuminate\Support\Facades\Log;
 
 return [
 
@@ -127,5 +128,7 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
     ],
+
+
 
 ];
