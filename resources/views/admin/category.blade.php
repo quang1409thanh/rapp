@@ -16,6 +16,26 @@
         .input_color {
             color: black;
         }
+        table {
+            border-collapse: collapse;
+        }
+
+        table td,
+        table th {
+            border: 1px solid #fff;
+            padding: 8px;
+        }
+        .center{
+            margin: auto;
+            width: 70%;
+            text-align: center;
+            margin-top: 30px;
+            border: 3px solid chartreuse;
+        }
+        .title{
+            font-size: 20px;
+            color: yellow;
+        }
 
     </style>
 </head>
@@ -44,6 +64,27 @@
                 </form>
             </div>
 
+            <table class="center">
+                <tr class="title">
+                    <td>Category Name</td>
+                    <td>Description</td>
+                    <td>Delete</td>
+                    <td>Edit</td>
+                </tr>
+                @foreach($data as $data)
+                    <tr>
+                        <td>{{$data->category_name}}</td>
+                        <td>{{$data->description}}</td>
+                        <td>
+                            <a onclick="return confirm('Bạn có chắc là muốn xóa ?')" class="btn btn-danger" href="{{url('delete_category', $data->id)}}">DELETE</a>
+                        </td>
+                        <td>
+                            <a  class="btn btn-primary" href="{{url('edit_category', $data->id)}}">EDIT</a>
+                        </td>
+
+                    </tr>
+                @endforeach
+            </table>
         </div>
     </div>
     <!-- container-scroller -->

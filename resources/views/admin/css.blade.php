@@ -18,3 +18,19 @@
 <link rel="stylesheet" href="admin/assets/css/style.css">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="admin/assets/images/favicon.png" />
+{{--// Reponsive--}}
+<style>
+    /* CSS cho màn hình điện thoại */
+    @media only screen and (max-width: 767px) {
+        .sidebar {
+            /* Thiết lập các thuộc tính responsive cho màn hình điện thoại */
+        }
+    }
+
+    /* CSS cho nửa màn hình laptop */
+    @media only screen and (min-width: 768px) and (max-width: 1199px) {
+        .sidebar {
+            /* Thiết lập các thuộc tính responsive cho nửa màn hình laptop */
+        }
+    }
+</style>
