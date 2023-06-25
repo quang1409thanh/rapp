@@ -42,27 +42,43 @@
     <!-- partial -->
     <div class="main-panel">
         <div class="content-wrapper">
+            @if (session('message'))
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    {{ session('message') }}
+                </div>
+            @endif
             <h2 class="font_size">All Products</h2>
             <table  class="center">
                 <tr class="title">
-                    <th>Product_title</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Discount</th>
-                    <th>View</th>
+                    <td>Product_title</td>
+                    <td>Quantity</td>
+                    <td>Category</td>
+                    <td>Price</td>
+                    <td>Discount</td>
+                    <td>View</td>
+                    <td>DELETE</td>
+                    <td>EDIT</td>
                 </tr>
-                    @foreach($product as $product)
+            @foreach($product as $product)
                     <tr>
-                    <th>{{$product -> title}}</th>
-                        <th>{{$product -> description}}</th>
-                        <th>{{$product -> quantity}}</th>
-                        <th>{{$product -> category_id}}</th>
-                        <th>{{$product-> price}}</th>
-                        <th>{{$product->discount}} %</th>
+                        <td>{{$product -> title}}</td>
+                        <td>{{$product -> quantity}}</td>
+                        @php
+                            $data = \App\Models\Category::find($product->category_id);
+                        @endphp
+                        <td>{{$data->category_name}}</td>
+                        <td>{{$product-> price}}</td>
+                        <td>{{$product->discount}} %</td>
+{{--                        todo: lấy ảnh hiện thị để sau phát triển--}}
                         <td>
                             <a  class="btn btn-primary" href="{{url('#')}}">Detail</a>
+                        </td>
+                        <td>
+                            <a onclick="return confirm('Bạn có chắc là muốn xóa ?')" class="btn btn-danger" href="{{url('delete_product', $product->id)}}">DELETE</a>
+                        </td>
+                        <td>
+                            <a  class="btn btn-success" href="{{url('update_product', $product->id)}}">EDIT</a>
                         </td>
                     </tr>
                 @endforeach

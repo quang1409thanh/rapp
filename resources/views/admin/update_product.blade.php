@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {{--    dùng để dùng được css không có thì css không được --}}
+    <base href="/public">
     @include('admin.css')
     <style>
         .div_center {
@@ -42,16 +44,17 @@
                     {{ session('message') }}
                 </div>
             @endif
+
             <div class="div_center">
-                <h1 class="font_size">Add Product</h1>
-                <form action="{{url('add_product')}}" method="POST" enctype="multipart/form-data">
+                <h1 class="font_size">Update Product</h1>
+                <form action="{{url('update_product_confirm', $product->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="div_design">
                         <label>
                             Product Title
                         </label>
                         <input class="text_color" type="text" name="title" placeholder="Nhập tiêu đề đi bạn "
-                               required="">
+                               required="" value="{{$product->title}}">
                     </div>
 
                     <div class="div_design">
@@ -59,14 +62,14 @@
                             Product Description
                         </label>
                         <input class="text_color" type="text" name="description" placeholder="Nhập mô tả đi bạn "
-                               required="">
+                               required="" value="{{$product->description}}">
                     </div>
 
                     <div class="div_design">
                         <label>
                             Product Price
                         </label>
-                        <input class="text_color" type="number" name="price" placeholder="Nhập giá đi bạn " required="">
+                        <input class="text_color" type="number" name="price" placeholder="Nhập giá đi bạn " required="" value="{{$product->price}}">
                     </div>
 
                     <div class="div_design">
@@ -74,39 +77,47 @@
                             Product Quantity
                         </label>
                         <input class="text_color" type="number" min="0" name="quantity"
-                               placeholder="Nhập số lượng sản phẩm đi bạn " required="">
+                               placeholder="Nhập số lượng sản phẩm đi bạn " required="" value="{{$product->quantity}}">
                     </div>
                     <div class="div_design">
                         <label>
                             Product Discount
                         </label>
                         <input class="text_color" type="text" name="discount" placeholder="Nhập giảm giá đi bạn "
-                               required="">
+                               required="" value="{{$product->discount}}">
                     </div>
                     <div class="div_design">
                         <label>
                             Product Category
                         </label>
+                        @php
+                            $data = \App\Models\Category::find($product->category_id);
+                        @endphp
                         <select class="text_color" name="category" required="">
-                            <option value="" selected="">
-                                Thêm danh mục ở đây
+                            <option value="{{$data->category_name}}" selected="">
+                                {{$data->category_name}}
                             </option>
                             @foreach($category as $category)
                                 <option>
                                     {{$category->category_name}}
                                 </option>
-
                             @endforeach
                         </select>
                     </div>
                     <div class="div_design">
                         <label>
-                            Product Image Here
+                            Current Image Here
                         </label>
-                        <input type="file" name="image" required="">
+                        <img style="margin:auto;" height="250" width="250" src="/product/{{$product->image}}">
                     </div>
                     <div class="div_design">
-                        <input value="Add Product" class="btn btn-primary" type="submit">
+                        <label>
+                            Change Image Here
+                        </label>
+                        <input type="file" name="image" >
+                    </div>
+                    <div class="div_design">
+                        <input value="Update Product" class="btn btn-primary" type="submit">
                     </div>
                 </form>
             </div>
