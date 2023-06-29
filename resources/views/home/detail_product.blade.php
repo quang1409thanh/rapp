@@ -3,7 +3,14 @@
 @include('home.head')
 <body>
 @include('home.navbar')
+
 <div class="col-sm-6 col-md-4 col-lg-4" style="margin:auto; width: 50%; padding: 30px ">
+    @if (session('message'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="box">
         <div class="img-box" style="padding-top: 20px">
             <img src="product/{{$product->image}}" alt="">
@@ -43,14 +50,26 @@
             <h6>
                 Category: {{$data->category_name}}
             </h6>
+            <form action="{{url('add_cart',$product->id)}}" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>
+                            <input type="number" name="quantity" value="1" min="1" style=" width: 100px; height: 49px" >
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="submit" value="Add to Cart">
+                    </div>
+                </div>
+            </form>
             <br>
-            <a href="" class="btn btn-primary">
-                Add to Cart
-            </a>
         </div>
     </div>
 </div>
 
 @include('home.footer')
+@include('home.script')
+
 </body>
 </html>

@@ -5,8 +5,14 @@
                 Our <span>products</span>
             </h2>
         </div>
+        @if (session('message'))
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="row">
-{{--            todo: thực hiện làm hiện thị trang chi tiết cá nhân sau khi hoàn thành khung--}}
+            {{--            todo: thực hiện làm hiện thị trang chi tiết cá nhân sau khi hoàn thành khung--}}
             @foreach($product as $prd)
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="box">
@@ -15,9 +21,20 @@
                                 <a href="{{url('detail_product',$prd->id)}}" class="option1">
                                     {{$prd->title}}
                                 </a>
-                                <a href="" class="option2">
-                                    Buy Now
-                                </a>
+                                <form  action="{{url('add_cart',$prd->id)}}" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>
+                                                <input type="number" name="quantity" value="1" min="1"
+                                                       style=" width: 100px; height: 49px">
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="submit" value="Add to Cart">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="img-box">
@@ -27,7 +44,7 @@
                             <h5>
                                 {{$prd->title}}
                             </h5>
-{{--                                todo: Hiện thị giá chiết khấu sản phẩm--}}
+                            {{--                                todo: Hiện thị giá chiết khấu sản phẩm--}}
                             @if($prd->discount != null)
                                 <h6 style="color: red">
                                     Discount price
@@ -40,11 +57,11 @@
                                     ${{$prd->price}}
                                 </h6>
                             @else
-                            <h6 style="color: blue">
-                                Price
-                                <br>
-                                 ${{$prd->price}}
-                            </h6>
+                                <h6 style="color: blue">
+                                    Price
+                                    <br>
+                                    ${{$prd->price}}
+                                </h6>
                             @endif
                         </div>
                     </div>
@@ -54,10 +71,10 @@
                 {!!$product->withQueryString()->links('pagination::bootstrap-5')!!}
             </span>
         </div>
-{{--        <div class="btn-box">--}}
-{{--            <a href="">--}}
-{{--                View All products--}}
-{{--            </a>--}}
-{{--        </div>--}}
+        {{--        <div class="btn-box">--}}
+        {{--            <a href="">--}}
+        {{--                View All products--}}
+        {{--            </a>--}}
+        {{--        </div>--}}
     </div>
 </section>
