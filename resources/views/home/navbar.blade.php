@@ -1,17 +1,20 @@
 <header class="header_section">
     <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="{{url('/')}}"><img width=200 src="images/hi.gif" alt="#"/></a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class=""> </span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                 <ul class="navbar-nav">
+                    <a class="navbar-brand" href="{{url('/')}}"> LOGO </a>
+{{--                            src="images/hi.gif" alt="#"/></a>--}}
                     <div class="nav-item" class='search-bar'>
                         <form class=" form-inline">
-                            <div class="form-group">
+                            <div class="form-group-search">
                                 <input type="text" class="form-control" name="keyword" placeholder="Search">
                                 <img src="images/search.png">
                             </div>
