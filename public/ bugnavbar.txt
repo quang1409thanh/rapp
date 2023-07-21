@@ -1,0 +1,2 @@
+lỗi hiện thị navbar sai ở trong thư mục này
+=> tạo project mới => copy toàn bộ public thế vào cái này :)
