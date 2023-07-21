@@ -111,23 +111,45 @@ class HomeController extends Controller
             return redirect()->back()->with('message', 'Giỏ hàng rỗng, xin vui lòng thêm sản phẩm vào giỏ hàng!!!')->with('url', '/');
     }
 
-//    public function stripe($totalprice){
-//        return view('home.stripe', compact('totalprice'));
-//    }
-//    public function stripePost(Request $request)
-//    {
-//        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-//
-//        Stripe\Charge::create ([
-//            "amount" => 100 * 100,
-//            "currency" => "usd",
-//            "source" => $request->stripeToken,
-//            "description" => "Cảm ơn đã thanh toán"
-//        ]);
-//
-//        Session::flash('success', 'Payment successful!');
-//
-//        return back();
-//    }
+    public function stripe($totalprice){
+        return view('home.stripe', compact('totalprice'));
+    }
+    public function stripePost(Request $request, $totalprice)
+    {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe\Charge::create ([
+            "amount" => $totalprice * 100,
+            "currency" => "usd",
+            "source" => $request->stripeToken,
+            "description" => "Cảm ơn đã thanh toán"
+        ]);
+
+        $user = Auth::user();
+        $userid = $user->id;
+        $cart = Cart::where('user_id', '=', $userid)->get();
+        foreach ($cart as $item){
+            $order = new Order();
+            $order->name = $item->name;
+            $order->email = $item->email;
+            $order->address = $item->address;
+            $order->phone = $item->phone;
+            $order->user_id = $item->user_id;
+            $order->product_title = $item->product_title;
+            $order->price = $item->price;
+            $order->quantity = $item->quantity;
+            $order->image = $item->image;
+            $order->product_id = $item->Product_id;
+            $order->payment_status = 'Paid';
+            $order->delivery_status = 'processing';
+            $order->save();
+            $cart_id = $item->id;
+            $cart_fi = Cart::find($cart_id);
+            $cart_fi ->delete();
+        }
+
+        Session::flash('success', 'Payment successful!');
+
+        return back();
+    }
 
 }
