@@ -77,7 +77,7 @@
                             @if($order->delivery_status == 'Đang Xử Lý')
                                 <a href="{{url('delivered', $order->id)}} " onclick="return confirm('Đơn hàng này đã giao ư ? ')" class="btn btn-primary"> ☑️Delivered</a>
                             @else
-                                <p style="color: #03f303"> ✅  Delivered</p>
+                                <p style="color: #03f303"> ✅ Delivered</p>
                             @endif
                         </td>
                     </tr>
