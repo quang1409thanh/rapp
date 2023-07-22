@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
-
 class AdminController extends Controller
 {
     //
@@ -169,5 +169,11 @@ class AdminController extends Controller
             abort(404, 'Order not found');
         }
     }
+    public function print_pdf($id){
+        $order = Order::find($id);
 
+        $pdf = PDF::loadView('admin.pdf', compact('order'));
+//        return  view('admin.pdf', compact('order'));
+        return $pdf -> download('order_details.pdf');
+    }
 }

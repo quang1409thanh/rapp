@@ -59,6 +59,7 @@
                     <th>Payment Status</th>
                     <th>Delivery Status</th>
                     <th>Delivered</th>
+                    <th>Print PDF</th>
                 </tr>
                 @foreach($orders as $order)
                     <tr>
@@ -79,6 +80,9 @@
                             @else
                                 <p style="color: #03f303"> ✅ Delivered</p>
                             @endif
+                        </td>
+                        <td>
+                            <a href="{{url('print_pdf', $order->id)}}" class="btn btn-secondary">Print PDF</a>
                         </td>
                     </tr>
                 @endforeach
