@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Notification;
+
 class AdminController extends Controller
 {
     //
@@ -125,7 +126,7 @@ class AdminController extends Controller
             // Xử lý khi không tìm thấy danh mục
             $product->category_id = 0;
         }
-        if($request->image !=null) {
+        if ($request->image != null) {
             // xoá ảnh cũ.
             $old_ImageName = $product->image;
             $old_ImagePath = public_path('product/' . $old_ImageName);
@@ -139,16 +140,18 @@ class AdminController extends Controller
             $product->image = $imagename;
         }
         $product->save();
-        return redirect()->back()->with('message',' Sản phẩm đã được cập nhật thành công !');
+        return redirect()->back()->with('message', ' Sản phẩm đã được cập nhật thành công !');
         // todo: có thể sử dụng cách đặt tên ảnh khác để tránh xung đột file
     }
 
-    public function order(){
+    public function order()
+    {
         $orders = Order::all();
         return view('admin.order', compact('orders'));
     }
 
-    public function delivered($id){
+    public function delivered($id)
+    {
         $order = Order::find($id);
         $order->delivery_status = "Đã Giao Hàng";
         $order->payment_status = "Đã Thanh Toán";
@@ -156,6 +159,7 @@ class AdminController extends Controller
         return redirect()->back();
         //TODO: sửa lại để khi load lại trang thì vẫn ở trạng thái hiện tại
     }
+
     public function see_info($order_id)
     {
         $order = Order::find($order_id);
@@ -171,30 +175,47 @@ class AdminController extends Controller
             abort(404, 'Order not found');
         }
     }
-    public function print_pdf($id){
+
+    public function print_pdf($id)
+    {
         $order = Order::find($id);
 
         $pdf = PDF::loadView('admin.pdf', compact('order'));
 //        return  view('admin.pdf', compact('order'));
-        return $pdf -> download('order_details.pdf');
+        return $pdf->download('order_details.pdf');
     }
-    public function send_email($id){
+
+    public function send_email($id)
+    {
         $order = Order::find($id);
 
         return view('admin.email_info', compact('order'));
     }
-    public function send_user_email(Request $request, $id){
+
+    public function send_user_email(Request $request, $id)
+    {
+//        $notification = new Notification();
         $order = Order::find($id);
         $details = [
-            'greeting' => $request -> greeting,
-            'header' => $request -> header,
-            'body' => $request -> body,
-            'button' => $request -> button,
-            'url' => $request -> url,
-            'lastline' => $request -> lastline,
+            'greeting' => $request->greeting,
+            'header' => $request->header,
+            'body' => $request->body,
+            'button' => $request->button,
+            'url' => $request->url,
+            'lastline' => $request->lastline,
 
         ];
+        //TODO: lưu thông báo vào db ở đây
+//        $notification->type = "fixme";
+//        $notification->save();
         Notification::send($order, new SendEmailNotification($details));
-        return redirect()->back();
+        return redirect()->back();//TODO: hiện thị thông báo đã gửi email
+    }
+
+    public function search_data(Request $request)
+    {
+        $searchText = $request->search;
+        $orders = Order::Where('name', 'LIKE', "%$searchText%")->orWhere('email', 'LIKE', "%$searchText%")->orWhere('phone', 'LIKE', "%$searchText%")->orWhere('product_title', 'LIKE', "%$searchText%") ->get();
+        return view('admin.order', compact('orders'));
     }
 }

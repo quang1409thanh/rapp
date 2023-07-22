@@ -33,7 +33,16 @@
             border: 1px solid #fff;
             padding: 8px;
         }
+        .centered-form {
+            width: 400px; /* Đặt chiều rộng cố định cho form */
+            margin: 0 auto; /* Căn giữa form theo chiều ngang */
+            padding-bottom: 30px;
+        }
 
+        .centered-form form {
+            display: inline-block; /* Sử dụng display inline-block để form chỉ chiếm không gian cần thiết */
+            text-align: left; /* Đảm bảo nội dung trong form căn trái */
+        }
 
     </style>
 </head>
@@ -47,6 +56,16 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <h1 class="title_deg"> ALL Orders</h1>
+
+            <div class="centered-form">
+                <form action="{{url('search')}}" method="get">
+                    <label>
+                        <input style="color: black" type="text" name="search" placeholder="Search for something">
+                    </label>
+                    <input type="submit" value="Search" class="btn btn-outline-primary">
+                </form>
+            </div>
+
             <table class="table_deg">
                 <tr class="th_deg">
                     <th>Name</th>
@@ -63,7 +82,7 @@
                     <th>Send Email</th>
 
                 </tr>
-                @foreach($orders as $order)
+                @forelse($orders as $order)
                     <tr>
                         <td>
                             <a href="{{ url('/t_info', $order->id) }}">{{ $order->name }}</a>
@@ -90,7 +109,14 @@
                             <a href="{{url('send_email', $order->id)}}" class="btn btn-info">Send</a>
                         </td>
                     </tr>
-                @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="16">
+                            No Data Found
+                        </td>
+                    </tr>
+
+                @endforelse
             </table>
         </div>
     </div>
