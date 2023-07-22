@@ -14,7 +14,7 @@ use Stripe;
 class HomeController extends Controller
 {
     public function index(){
-        $product = Product::paginate(3);
+        $product = Product::paginate(6);
         return view('home.userpage', compact('product'));
         //TODO: fix khi ở trạng thái admin nhưng nếu gõ url "/" thì sẽ hiện ra index này -> fix về trang admin
     }
@@ -26,7 +26,7 @@ class HomeController extends Controller
             return view('admin.home');
         }
         else {
-            $product = Product::paginate(3);
+            $product = Product::paginate(6);
             return view('home.userpage', compact('product'));
         }
     }
@@ -98,8 +98,8 @@ class HomeController extends Controller
             $order->quantity = $item->quantity;
             $order->image = $item->image;
             $order->product_id = $item->Product_id;
-            $order->payment_status = 'cash on delivery';
-            $order->delivery_status = 'processing';
+            $order->payment_status = 'Thanh Toán Khi Nhận';
+            $order->delivery_status = 'Đang Xử Lý';
             $order->save();
             $cart_id = $item->id;
             $cart_fi = Cart::find($cart_id);
@@ -140,8 +140,8 @@ class HomeController extends Controller
             $order->quantity = $item->quantity;
             $order->image = $item->image;
             $order->product_id = $item->Product_id;
-            $order->payment_status = 'Paid';
-            $order->delivery_status = 'processing';
+            $order->payment_status = 'Đã Thanh Toán';
+            $order->delivery_status = 'Đang Xử Lý';
             $order->save();
             $cart_id = $item->id;
             $cart_fi = Cart::find($cart_id);

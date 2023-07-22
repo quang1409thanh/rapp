@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
@@ -138,4 +140,34 @@ class AdminController extends Controller
         return redirect()->back()->with('message',' Sản phẩm đã được cập nhật thành công !');
         // todo: có thể sử dụng cách đặt tên ảnh khác để tránh xung đột file
     }
+
+    public function order(){
+        $orders = Order::all();
+        return view('admin.order', compact('orders'));
+    }
+
+    public function delivered($id){
+        $order = Order::find($id);
+        $order->delivery_status = "Đã Giao Hàng";
+        $order->payment_status = "Đã Thanh Toán";
+        $order->save();
+        return redirect()->back();
+        //TODO: sửa lại để khi load lại trang thì vẫn ở trạng thái hiện tại
+    }
+    public function see_info($order_id)
+    {
+        $order = Order::find($order_id);
+
+        if ($order) {
+            // Accessing the buyer relationship to get the associated buyer's ID
+            $user_id = $order->user_id;
+            $user = User::find($user_id);
+            // Now you can use $buyer_id for further processing or display it if needed.
+            // For example, you can return it in a response or pass it to a view.
+            return view('admin.t_info', compact('user'));
+        } else {
+            abort(404, 'Order not found');
+        }
+    }
+
 }

@@ -1,8 +1,4 @@
-<div class="cpy_">
-    <p class="mx-auto">© 2023 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
-        Distributed By <a href="" target="_blank">Nguyễn Quang Thành</a>
-    </p>
-</div>
+<!--script-->
 <!-- jQery -->
 <script src="home/js/jquery-3.4.1.min.js"></script>
 <!-- popper js -->

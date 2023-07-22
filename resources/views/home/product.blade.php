@@ -1,4 +1,4 @@
-<section class="product_section layout_padding">
+<section class="product_section layout_padding" style="background-color: rgba(0,58,25,0.43)">
     <div class="container">
         <div class="heading_container heading_center">
             <h2>

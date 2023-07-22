@@ -12,11 +12,13 @@
                 <ul class="navbar-nav">
                     <a class="navbar-brand" href="{{url('/')}}"> LOGO </a>
 {{--                            src="images/hi.gif" alt="#"/></a>--}}
-                    <div class="nav-item" class='search-bar'>
+                    <div class="nav-item">
                         <form class=" form-inline">
                             <div class="form-group-search">
-                                <input type="text" class="form-control" name="keyword" placeholder="Search">
-                                <img src="images/search.png">
+                                <label>
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search">
+                                </label>
+                                <img src="images/search.png" alt="">
                             </div>
                         </form>
                     </div>

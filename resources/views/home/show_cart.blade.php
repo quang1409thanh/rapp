@@ -2,8 +2,8 @@
 <html lang="en">
 @include('home.head')
 <style>
-
     table {
+        border: 3px solid chartreuse;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -20,7 +20,6 @@
         width: 70%;
         text-align: center;
         margin-top: 30px;
-        border: 3px solid chartreuse;
         padding-bottom: 20px;
     }
 
@@ -43,13 +42,15 @@
 
 </style>
 <body>
-<div class="hero_area">
+<div class="hero_area" style="background-color: rgba(0,255,21,0.1);">
     <!-- header section strats -->
     @include('home.navbar')
     <!-- end header section -->
     <div class="center">
-
-
+        <header>
+            <h1 style="font-size: 28px; padding-bottom: 20px">Giỏ hàng của bạn !~!</h1>
+            <br>
+        </header>
         @if (session('message'))
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
@@ -97,11 +98,11 @@
             <a href="{{url('stripe', $totalprice)}}" class="btn btn-danger">Pay Using Card 🍑</a>
         </div>
     </div>
-    {{--    </div>--}}
-    <!-- footer start -->
-    {{--    @include('home.footer')--}}
-    <!-- footer end -->
-    @include('home.script')
 </div>
+<!-- footer start -->
+@include('home.footer')
+<!-- footer end -->
+@include('home.copyright')
+@include('home.script')
 </body>
 </html>

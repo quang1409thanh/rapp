@@ -65,3 +65,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # rapp
+## package:
+1. composer require laravel/jetstream
+2. php artisan jetstream:install livewire 
+3. npm install
+4. npm run dev
+5. composer require stripe/stripe-php
+6. composer require barryvdh/laravel-dompdf
+7. 
