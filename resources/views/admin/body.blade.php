@@ -6,7 +6,8 @@
                     <div class="card-body py-0 px-0 px-sm-3">
                         <div class="row align-items-center">
                             <div class="col-4 col-sm-3 col-xl-2">
-                                <img src="admin/assets/images/dashboard/Group126@2x.png" class="gradient-corona-img img-fluid" alt="">
+                                <img src="admin/assets/images/dashboard/Group126@2x.png"
+                                     class="gradient-corona-img img-fluid" alt="">
                             </div>
                             <div class="col-5 col-sm-7 col-xl-8 p-0">
                                 <h4 class="mb-1 mb-sm-0">Bạn đang nghĩ gì ?</h4>
@@ -14,7 +15,8 @@
                             </div>
                             <div class="col-3 col-sm-2 col-xl-2 pl-0 text-center">
                         <span>
-                          <a href="https://www.bootstrapdash.com/product/corona-admin-template/" target="_blank" class="btn btn-outline-light btn-rounded get-started-btn">Hãy lưu vào nhật ký vui vẻ</a>
+                          <a href="https://www.bootstrapdash.com/product/corona-admin-template/" target="_blank"
+                             class="btn btn-outline-light btn-rounded get-started-btn">Hãy lưu vào nhật ký vui vẻ</a>
                         </span>
                             </div>
                         </div>
@@ -29,7 +31,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <div class="d-flex align-items-center align-self-start">
-                                    <h3 class="mb-0">$12.34</h3>
+                                    <h3 class="mb-0">{{$total_product}}</h3>
                                     <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                                 </div>
                             </div>
@@ -39,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h6 class="text-muted font-weight-normal">Potential growth</h6>
+                        <h6 class="text-muted font-weight-normal">Total Products</h6>
                     </div>
                 </div>
             </div>
@@ -49,7 +51,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <div class="d-flex align-items-center align-self-start">
-                                    <h3 class="mb-0">$17.34</h3>
+                                    <h3 class="mb-0">{{$total_orders}}</h3>
                                     <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
                                 </div>
                             </div>
@@ -59,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h6 class="text-muted font-weight-normal">Revenue current</h6>
+                        <h6 class="text-muted font-weight-normal">Total Orders</h6>
                     </div>
                 </div>
             </div>
@@ -69,7 +71,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <div class="d-flex align-items-center align-self-start">
-                                    <h3 class="mb-0">$12.34</h3>
+                                    <h3 class="mb-0">{{$total_customers}}</h3>
                                     <p class="text-danger ml-2 mb-0 font-weight-medium">-2.4%</p>
                                 </div>
                             </div>
@@ -79,7 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h6 class="text-muted font-weight-normal">Daily Income</h6>
+                        <h6 class="text-muted font-weight-normal">Total Customers</h6>
                     </div>
                 </div>
             </div>
@@ -89,7 +91,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <div class="d-flex align-items-center align-self-start">
-                                    <h3 class="mb-0">$31.53</h3>
+                                    <h3 class="mb-0">${{$revenue}}</h3>
                                     <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                                 </div>
                             </div>
@@ -99,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h6 class="text-muted font-weight-normal">Expense current</h6>
+                        <h6 class="text-muted font-weight-normal">Total Revenue</h6>
                     </div>
                 </div>
             </div>
@@ -110,21 +112,25 @@
                     <div class="card-body">
                         <h4 class="card-title">Transaction History</h4>
                         <canvas id="transaction-history" class="transaction-chart"></canvas>
-                        <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                        <div
+                            class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
                             <div class="text-md-center text-xl-left">
                                 <h6 class="mb-1">Transfer to Paypal</h6>
                                 <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
                             </div>
-                            <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
+                            <div
+                                class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
                                 <h6 class="font-weight-bold mb-0">$236</h6>
                             </div>
                         </div>
-                        <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                        <div
+                            class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
                             <div class="text-md-center text-xl-left">
                                 <h6 class="mb-1">Tranfer to Stripe</h6>
                                 <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
                             </div>
-                            <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
+                            <div
+                                class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
                                 <h6 class="font-weight-bold mb-0">$593</h6>
                             </div>
                         </div>
@@ -237,11 +243,11 @@
             <div class="col-sm-4 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Revenue</h5>
+                        <h5>Order Delivered</h5>
                         <div class="row">
                             <div class="col-8 col-sm-12 col-xl-8 my-auto">
                                 <div class="d-flex d-sm-block d-md-flex align-items-center">
-                                    <h2 class="mb-0">$32123</h2>
+                                    <h2 class="mb-0">{{$order_delivered}}</h2>
                                     <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                                 </div>
                                 <h6 class="text-muted font-weight-normal">11.38% Since last month</h6>
@@ -256,11 +262,11 @@
             <div class="col-sm-4 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Sales</h5>
+                        <h5>Order Processing</h5>
                         <div class="row">
                             <div class="col-8 col-sm-12 col-xl-8 my-auto">
                                 <div class="d-flex d-sm-block d-md-flex align-items-center">
-                                    <h2 class="mb-0">$45850</h2>
+                                    <h2 class="mb-0">{{$order_processing}}</h2>
                                     <p class="text-success ml-2 mb-0 font-weight-medium">+8.3%</p>
                                 </div>
                                 <h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6>
@@ -308,13 +314,13 @@
                                             </label>
                                         </div>
                                     </th>
-                                    <th> Client Name </th>
-                                    <th> Order No </th>
-                                    <th> Product Cost </th>
-                                    <th> Project </th>
-                                    <th> Payment Mode </th>
-                                    <th> Start Date </th>
-                                    <th> Payment Status </th>
+                                    <th> Client Name</th>
+                                    <th> Order No</th>
+                                    <th> Product Cost</th>
+                                    <th> Project</th>
+                                    <th> Payment Mode</th>
+                                    <th> Start Date</th>
+                                    <th> Payment Status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -327,14 +333,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <img src="admin/assets/images/faces/face1.jpg" alt="image" />
+                                        <img src="admin/assets/images/faces/face1.jpg" alt="image"/>
                                         <span class="pl-2">Henry Klein</span>
                                     </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td> Dashboard </td>
-                                    <td> Credit card </td>
-                                    <td> 04 Dec 2019 </td>
+                                    <td> 02312</td>
+                                    <td> $14,500</td>
+                                    <td> Dashboard</td>
+                                    <td> Credit card</td>
+                                    <td> 04 Dec 2019</td>
                                     <td>
                                         <div class="badge badge-outline-success">Approved</div>
                                     </td>
@@ -348,14 +354,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <img src="admin/assets/images/faces/face2.jpg" alt="image" />
+                                        <img src="admin/assets/images/faces/face2.jpg" alt="image"/>
                                         <span class="pl-2">Estella Bryan</span>
                                     </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td> Website </td>
-                                    <td> Cash on delivered </td>
-                                    <td> 04 Dec 2019 </td>
+                                    <td> 02312</td>
+                                    <td> $14,500</td>
+                                    <td> Website</td>
+                                    <td> Cash on delivered</td>
+                                    <td> 04 Dec 2019</td>
                                     <td>
                                         <div class="badge badge-outline-warning">Pending</div>
                                     </td>
@@ -369,14 +375,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <img src="admin/assets/images/faces/face5.jpg" alt="image" />
+                                        <img src="admin/assets/images/faces/face5.jpg" alt="image"/>
                                         <span class="pl-2">Lucy Abbott</span>
                                     </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td> App design </td>
-                                    <td> Credit card </td>
-                                    <td> 04 Dec 2019 </td>
+                                    <td> 02312</td>
+                                    <td> $14,500</td>
+                                    <td> App design</td>
+                                    <td> Credit card</td>
+                                    <td> 04 Dec 2019</td>
                                     <td>
                                         <div class="badge badge-outline-danger">Rejected</div>
                                     </td>
@@ -390,14 +396,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <img src="admin/assets/images/faces/face3.jpg" alt="image" />
+                                        <img src="admin/assets/images/faces/face3.jpg" alt="image"/>
                                         <span class="pl-2">Peter Gill</span>
                                     </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td> Development </td>
-                                    <td> Online Payment </td>
-                                    <td> 04 Dec 2019 </td>
+                                    <td> 02312</td>
+                                    <td> $14,500</td>
+                                    <td> Development</td>
+                                    <td> Online Payment</td>
+                                    <td> 04 Dec 2019</td>
                                     <td>
                                         <div class="badge badge-outline-success">Approved</div>
                                     </td>
@@ -411,14 +417,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <img src="admin/assets/images/faces/face4.jpg" alt="image" />
+                                        <img src="admin/assets/images/faces/face4.jpg" alt="image"/>
                                         <span class="pl-2">Sallie Reyes</span>
                                     </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td> Website </td>
-                                    <td> Credit card </td>
-                                    <td> 04 Dec 2019 </td>
+                                    <td> 02312</td>
+                                    <td> $14,500</td>
+                                    <td> Website</td>
+                                    <td> Credit card</td>
+                                    <td> 04 Dec 2019</td>
                                     <td>
                                         <div class="badge badge-outline-success">Approved</div>
                                     </td>
@@ -441,7 +447,7 @@
                         <div class="preview-list">
                             <div class="preview-item border-bottom">
                                 <div class="preview-thumbnail">
-                                    <img src="admin/assets/images/faces/face6.jpg" alt="image" class="rounded-circle" />
+                                    <img src="admin/assets/images/faces/face6.jpg" alt="image" class="rounded-circle"/>
                                 </div>
                                 <div class="preview-item-content d-flex flex-grow">
                                     <div class="flex-grow">
@@ -455,7 +461,7 @@
                             </div>
                             <div class="preview-item border-bottom">
                                 <div class="preview-thumbnail">
-                                    <img src="admin/assets/images/faces/face8.jpg" alt="image" class="rounded-circle" />
+                                    <img src="admin/assets/images/faces/face8.jpg" alt="image" class="rounded-circle"/>
                                 </div>
                                 <div class="preview-item-content d-flex flex-grow">
                                     <div class="flex-grow">
@@ -469,7 +475,7 @@
                             </div>
                             <div class="preview-item border-bottom">
                                 <div class="preview-thumbnail">
-                                    <img src="admin/assets/images/faces/face9.jpg" alt="image" class="rounded-circle" />
+                                    <img src="admin/assets/images/faces/face9.jpg" alt="image" class="rounded-circle"/>
                                 </div>
                                 <div class="preview-item-content d-flex flex-grow">
                                     <div class="flex-grow">
@@ -483,7 +489,7 @@
                             </div>
                             <div class="preview-item border-bottom">
                                 <div class="preview-thumbnail">
-                                    <img src="admin/assets/images/faces/face11.jpg" alt="image" class="rounded-circle" />
+                                    <img src="admin/assets/images/faces/face11.jpg" alt="image" class="rounded-circle"/>
                                 </div>
                                 <div class="preview-item-content d-flex flex-grow">
                                     <div class="flex-grow">
@@ -503,7 +509,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Portfolio Slide</h4>
-                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel" id="owl-carousel-basic">
+                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel"
+                             id="owl-carousel-basic">
                             <div class="item">
                                 <img src="admin/assets/images/dashboard/Rectangle.jpg" alt="">
                             </div>
@@ -534,7 +541,8 @@
                         </div>
                         <p class="text-muted">Well, it seems to be working now. </p>
                         <div class="progress progress-md portfolio-progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
+                                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -566,7 +574,8 @@
                                 <li class="completed">
                                     <div class="form-check form-check-primary">
                                         <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox" checked> Prepare for presentation </label>
+                                            <input class="checkbox" type="checkbox" checked> Prepare for presentation
+                                        </label>
                                     </div>
                                     <i class="remove mdi mdi-close-box"></i>
                                 </li>
@@ -605,48 +614,48 @@
                                                 <i class="flag-icon flag-icon-us"></i>
                                             </td>
                                             <td>USA</td>
-                                            <td class="text-right"> 1500 </td>
-                                            <td class="text-right font-weight-medium"> 56.35% </td>
+                                            <td class="text-right"> 1500</td>
+                                            <td class="text-right font-weight-medium"> 56.35%</td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <i class="flag-icon flag-icon-de"></i>
                                             </td>
                                             <td>Germany</td>
-                                            <td class="text-right"> 800 </td>
-                                            <td class="text-right font-weight-medium"> 33.25% </td>
+                                            <td class="text-right"> 800</td>
+                                            <td class="text-right font-weight-medium"> 33.25%</td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <i class="flag-icon flag-icon-au"></i>
                                             </td>
                                             <td>Australia</td>
-                                            <td class="text-right"> 760 </td>
-                                            <td class="text-right font-weight-medium"> 15.45% </td>
+                                            <td class="text-right"> 760</td>
+                                            <td class="text-right font-weight-medium"> 15.45%</td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <i class="flag-icon flag-icon-gb"></i>
                                             </td>
                                             <td>United Kingdom</td>
-                                            <td class="text-right"> 450 </td>
-                                            <td class="text-right font-weight-medium"> 25.00% </td>
+                                            <td class="text-right"> 450</td>
+                                            <td class="text-right font-weight-medium"> 25.00%</td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <i class="flag-icon flag-icon-ro"></i>
                                             </td>
                                             <td>Romania</td>
-                                            <td class="text-right"> 620 </td>
-                                            <td class="text-right font-weight-medium"> 10.25% </td>
+                                            <td class="text-right"> 620</td>
+                                            <td class="text-right font-weight-medium"> 10.25%</td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <i class="flag-icon flag-icon-br"></i>
                                             </td>
                                             <td>Brasil</td>
-                                            <td class="text-right"> 230 </td>
-                                            <td class="text-right font-weight-medium"> 75.00% </td>
+                                            <td class="text-right"> 230</td>
+                                            <td class="text-right font-weight-medium"> 75.00%</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -666,7 +675,8 @@
     <footer class="footer">
         <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
+                    href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
         </div>
     </footer>
     <!-- partial -->

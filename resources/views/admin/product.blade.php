@@ -4,8 +4,8 @@
     @include('admin.css')
     <style>
         .div_center {
-            text-align: center;
-            padding-top: 40px;
+            padding-left: 35%;
+            padding-top: 30px;
         }
 
         .font_size {
@@ -19,7 +19,12 @@
 
         label {
             display: inline-block;
-            width: 200px;
+            width: 150px;
+            font-size: 15px;
+        }
+
+        input [type = "text"] {
+            width: 250px;
         }
 
         .div_design {
@@ -48,56 +53,68 @@
                     @csrf
                     <div class="div_design">
                         <label>
-                            Product Title
+                            Product Title:
                         </label>
-                        <input class="text_color" type="text" name="title" placeholder="Nhập tiêu đề đi bạn "
-                               required="">
+                        <label>
+                            <input style="width: 280px" class="text_color" type="text" name="title" placeholder="Nhập tiêu đề đi bạn "
+                                   required="">
+                        </label>
                     </div>
 
                     <div class="div_design">
                         <label>
-                            Product Description
+                            Product Description:
                         </label>
-                        <input class="text_color" type="text" name="description" placeholder="Nhập mô tả đi bạn "
-                               required="">
+                        <label>
+                            <input style="width: 280px" class="text_color" type="text" name="description" placeholder="Nhập mô tả đi bạn "
+                                   required="">
+                        </label>
                     </div>
 
                     <div class="div_design">
                         <label>
-                            Product Price
+                            Product Price:
                         </label>
-                        <input class="text_color" type="number" name="price" placeholder="Nhập giá đi bạn " required="">
+                        <label>
+                            <input style="width: 280px" class="text_color" type="number" name="price" placeholder="Nhập giá đi bạn "
+                                   required="">
+                        </label>
                     </div>
 
                     <div class="div_design">
                         <label>
-                            Product Quantity
+                            Product Quantity:
                         </label>
-                        <input class="text_color" type="number" min="0" name="quantity"
-                               placeholder="Nhập số lượng sản phẩm đi bạn " required="">
+                        <label>
+                            <input style="width: 280px" class="text_color" type="number" min="0" name="quantity"
+                                   placeholder="Nhập số lượng sản phẩm đi bạn " required="">
+                        </label>
                     </div>
                     <div class="div_design">
                         <label>
-                            Product Discount
+                            Product Discount:
                         </label>
-                        <input class="text_color" type="text" name="discount" placeholder="Nhập giảm giá đi bạn "
-                               required="">
+                        <label>
+                            <input style="width: 280px" class="text_color" type="text" name="discount" placeholder="Nhập giảm giá đi bạn "
+                                   required="">
+                        </label>
                     </div>
                     <div class="div_design">
                         <label>
-                            Product Category
+                            Product Category:
                         </label>
-                        <select class="text_color" name="category" required="">
-                            <option value="" selected="">
-                                Thêm danh mục ở đây
-                            </option>
-                            @foreach($category as $category)
-                                <option>
-                                    {{$category->category_name}}
+                        <label>
+                            <select style="width: 280px" class="text_color" name="category" required="">
+                                <option value="" selected="">
+                                    Thêm danh mục ở đây:
                                 </option>
-
-                            @endforeach
-                        </select>
+                                @foreach($category as $category)
+                                    <option>
+                                        {{$category->category_name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </label>
                     </div>
                     <div class="div_design">
                         <label>

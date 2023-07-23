@@ -9,8 +9,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Support\Facades\Notification;
+use App\Models\Notification;
 
+// Import model Notification
+use Illuminate\Support\Facades\Notification as FacadeNotification;
+use Illuminate\Support\Str;
+
+// Import class Notification Facade
 class AdminController extends Controller
 {
     //
@@ -163,7 +168,6 @@ class AdminController extends Controller
     public function see_info($order_id)
     {
         $order = Order::find($order_id);
-
         if ($order) {
             // Accessing the buyer relationship to get the associated buyer's ID
             $user_id = $order->user_id;
@@ -179,22 +183,23 @@ class AdminController extends Controller
     public function print_pdf($id)
     {
         $order = Order::find($id);
-
+        $filename = 'order_details' . $order->user_id . $order->id . '.pdf';
         $pdf = PDF::loadView('admin.pdf', compact('order'));
 //        return  view('admin.pdf', compact('order'));
-        return $pdf->download('order_details.pdf');
+        return $pdf->download($filename);
     }
 
     public function send_email($id)
     {
         $order = Order::find($id);
-
-        return view('admin.email_info', compact('order'));
+        $notifications = Notification::where('notifiable_type', 'App\\Models\\User')
+            ->where('notifiable_id', $order->user_id)
+            ->get();
+        return view('admin.email_info', compact('order','notifications'));
     }
 
     public function send_user_email(Request $request, $id)
     {
-//        $notification = new Notification();
         $order = Order::find($id);
         $details = [
             'greeting' => $request->greeting,
@@ -203,19 +208,63 @@ class AdminController extends Controller
             'button' => $request->button,
             'url' => $request->url,
             'lastline' => $request->lastline,
-
         ];
-        //TODO: lưu thông báo vào db ở đây
-//        $notification->type = "fixme";
-//        $notification->save();
-        Notification::send($order, new SendEmailNotification($details));
-        return redirect()->back();//TODO: hiện thị thông báo đã gửi email
+        // Lấy thông tin người dùng đang đăng nhập (hoặc bất kỳ người dùng nào bạn muốn liên kết với thông báo)
+        $user = User::find($order->user_id);
+        $notification = new Notification();
+        // Liên kết thông báo với người dùng
+        $notification->notifiable()->associate($user);
+        $uuid = Str::uuid();
+        $notification->id = $uuid;
+        $notification->type = "email"; // Loại thông báo, bạn có thể thay đổi nếu cần
+        $notification->data = json_encode($details); // Lưu dữ liệu vào trường 'data' dưới dạng JSON
+        $notification->read_at = null; // Đánh dấu là chưa đọc (null) hoặc thời gian khi đã đọc (nếu có)
+
+
+        // Lưu notification vào database
+        $notification->save();
+
+        // Sử dụng Notification Facade để gửi thông báo
+        FacadeNotification::send($order, new SendEmailNotification($details));
+
+        return redirect()->back();//TODO: hiển thị thông báo đã gửi email
     }
 
     public function search_data(Request $request)
     {
-        $searchText = $request->search;
-        $orders = Order::Where('name', 'LIKE', "%$searchText%")->orWhere('email', 'LIKE', "%$searchText%")->orWhere('phone', 'LIKE', "%$searchText%")->orWhere('product_title', 'LIKE', "%$searchText%") ->get();
-        return view('admin.order', compact('orders'));
+        $searchQuery = $request->input('search');
+        $sortBy = $request->input('sort_by');
+
+        $orders = Order::Where('name', 'LIKE', "%$searchQuery%")->orWhere('email', 'LIKE', "%$searchQuery%")->orWhere('phone', 'LIKE', "%$searchQuery%")->orWhere('product_title', 'LIKE', "%$searchQuery%")->get();
+        switch ($sortBy) {
+            case 'name_asc':
+                // Sắp xếp theo tên (tăng dần)
+                $orders = Order::orderBy('name', 'asc')->get();
+                break;
+            case 'name_desc':
+                // Sắp xếp theo tên (giảm dần)
+                $orders = Order::orderBy('name', 'desc')->get();
+                break;
+            case 'price_asc':
+                // Sắp xếp theo giá (tăng dần)
+                $orders = Order::orderBy('price', 'asc')->get();
+                break;
+            case 'price_desc':
+                // Sắp xếp theo giá (giảm dần)
+                $orders = Order::orderBy('price', 'desc')->get();
+                break;
+            // Xử lý các tùy chọn sắp xếp khác nếu cần
+            case 'processing':
+                $orders = Order::Where('delivery_status', 'Like', 'Đang Xử Lý')->get();
+                break;
+            case 'delivered':
+                $orders = Order::Where('delivery_status', 'Like', 'Đã Giao Hàng')->get();
+                break;
+            default:
+                // Mặc định không sắp xếp (hoặc xử lý sắp xếp mặc định)
+                break;
+        }
+        return view('admin.order', compact('orders', 'sortBy', 'searchQuery'));
     }
+
 }
