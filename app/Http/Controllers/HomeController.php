@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Reply;
 use Illuminate\Http\Request;
@@ -18,8 +19,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $product = Product::paginate(6);
-        return view('home.userpage', compact('product'));
+        $products = Product::paginate(6);
+        return view('home.userpage', compact('products'));
         //TODO: fix khi ở trạng thái admin nhưng nếu gõ url "/" thì sẽ hiện ra index này -> fix về trang admin
     }
 
@@ -43,11 +44,10 @@ class HomeController extends Controller
                     $order_processing = $order_processing + 1;
                 }
             }
-
             return view('admin.home', compact('total_product', 'total_orders', 'total_customers', 'revenue', 'order_delivered', 'order_processing'));
         } else {
-            $product = Product::paginate(6);
-            return view('home.userpage', compact('product'));
+            $products = Product::paginate(6);
+            return view('home.userpage', compact('products'));
         }
     }
 
@@ -69,26 +69,45 @@ class HomeController extends Controller
     {
         if (Auth::id()) {
             $user = Auth::user();
+            $user_id = $user->id;
             $product = Product::find($id);
-            $cart = new cart;
-            $cart->name = $user->name;
-            $cart->email = $user->email;
-            $cart->phone = $user->phone;
-            $cart->address = $user->address;
-            $cart->user_id = $user->id;
-            $cart->product_title = $product->title;
-            if ($product->discount != null) {
-                $cart->price = number_format($product->price * (1 - $product->discount / 100), 2);
-                $cart->price = str_replace(',', '', $cart->price);
-                // lưu vào cơ sở dữ liệu ko được có dấu , cái ở trên là loại bỏ dấy ,
+            $product_exist_id = Cart::where('product_id', '=', $id)->where('user_id', '=', $user_id)->get('id')->first();;
+            if ($product_exist_id) {
+                $cart = Cart::find($product_exist_id)->first();
+                $quantity = $cart->quantity;
+                $price = $cart->price;
+                $cart->quantity = $request->quantity + $quantity;
+                if ($cart->discount != null) {
+                    $cart->price = number_format($product->price * (1 - $product->discount / 100), 2);
+                    $cart->price = $price + str_replace(',', '', $cart->price) * $request->quantity;
+                    // lưu vào cơ sở dữ liệu ko được có dấu , cái ở trên là loại bỏ dấy ,
+                } else {
+                    $cart->price = $price + $product->price * $request->quantity;
+                }
+                $cart->save();
+                return redirect()->back()->with('message', 'Bạn đã cập nhật thêm ' . $quantity . ' số lượng cho sản phẩm này rồi bro!');
             } else {
-                $cart->price = $product->price;
+                $cart = new cart;
+                $cart->name = $user->name;
+                $cart->email = $user->email;
+                $cart->phone = $user->phone;
+                $cart->address = $user->address;
+                $cart->user_id = $user->id;
+                $cart->product_title = $product->title;
+                if ($product->discount != null) {
+                    $cart->price = number_format($product->price * (1 - $product->discount / 100), 2);
+                    $cart->price = str_replace(',', '', $cart->price) * $request->quantity;
+                    // lưu vào cơ sở dữ liệu ko được có dấu , cái ở trên là loại bỏ dấy ,
+                } else {
+                    $cart->price = $product->price * $request->quantity;
+                }
+                $cart->image = $product->image;
+                $cart->Product_id = $product->id;
+                $cart->quantity = $request->quantity;
+                $cart->save();
+                return redirect()->back()->with('message', 'Bạn đã thêm thành công vào giỏ hàng rồi bro !');
+
             }
-            $cart->image = $product->image;
-            $cart->Product_id = $product->id;
-            $cart->quantity = $request->quantity;
-            $cart->save();
-            return redirect()->back()->with('message', 'Bạn đã thêm thành công vào giỏ hàng rồi bro !');
         } else {
             return redirect('login');
         }
@@ -150,40 +169,23 @@ class HomeController extends Controller
 
     public function stripePost(Request $request, $totalprice)
     {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        Stripe\Charge::create([
-            "amount" => $totalprice * 100,
-            "currency" => "usd",
-            "source" => $request->stripeToken,
-            "description" => "Cảm ơn đã thanh toán"
-        ]);
+        if ($totalprice > 0) {
+            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            Stripe\Charge::create([
+                "amount" => $totalprice * 100,
+                "currency" => "usd",
+                "source" => $request->stripeToken,
+                "description" => "Cảm ơn đã thanh toán"
+            ]);
 
-        $user = Auth::user();
-        $userid = $user->id;
-        $cart = Cart::where('user_id', '=', $userid)->get();
-        foreach ($cart as $item) {
-            $order = new Order();
-            $order->name = $item->name;
-            $order->email = $item->email;
-            $order->address = $item->address;
-            $order->phone = $item->phone;
-            $order->user_id = $item->user_id;
-            $order->product_title = $item->product_title;
-            $order->price = $item->price;
-            $order->quantity = $item->quantity;
-            $order->image = $item->image;
-            $order->product_id = $item->Product_id;
-            $order->payment_status = 'Đã Thanh Toán';
-            $order->delivery_status = 'Đang Xử Lý';
-            $order->save();
-            $cart_id = $item->id;
-            $cart_fi = Cart::find($cart_id);
-            $cart_fi->delete();
+            Session::flash('success', 'Payment successful!');
+            return back();
+        } else {
+            // Thay đổi thành
+            Session::flash('error', 'Payment failed(chưa chọn sản phẩm nào)!'); // Thông báo lỗi thay thế
+            return back();
         }
 
-        Session::flash('success', 'Payment successful!');
-
-        return back();
     }
 
     public function show_order()
@@ -191,10 +193,10 @@ class HomeController extends Controller
         if (Auth::id()) {
             $user = Auth::user();
             $userid = $user->id;
-            $orders = Order::where('user_id', '=', $userid)->get();
+            $orders = Order::where('user_id', ' = ', $userid)->get();
             return view('home.order', compact('orders'));
         } else {
-            return view('login');
+            return redirect('login');
         }
     }
 
@@ -209,14 +211,17 @@ class HomeController extends Controller
     public function add_comment(Request $request, $id)
     {
         if (Auth::id()) {
-            $comment = new Comment();
-            $comment->name = Auth::user()->name;
-            $comment->user_id = Auth::user()->id;
-            $comment->comment = $request->comment;
-            $comment->product_id = $id;
-            $comment->save();
-
-            return redirect()->back();
+            if ($request->comment != null) {
+                $comment = new Comment();
+                $comment->name = Auth::user()->name;
+                $comment->user_id = Auth::user()->id;
+                $comment->comment = $request->comment;
+                $comment->product_id = $id;
+                $comment->save();
+                return redirect()->back();
+            } else {
+                return redirect()->back()->with('message', 'Bạn chưa viết gì !!!');
+            }
         } else {
             return redirect('login');
         }
@@ -236,5 +241,27 @@ class HomeController extends Controller
         } else {
             return redirect('login');
         }
+    }
+
+    public function product_search(Request $request)
+    {
+        $search_text = $request->search;
+
+        $products = Product::where('title', 'LIKE', "%$search_text%")
+            ->orWhereHas('category', function ($query) use ($search_text) {
+                $query->where('category_name', 'LIKE', "%$search_text%"); // khó hiểu -> liên quan đến hàm  category trong Mode/Product
+            })
+            ->paginate(6);
+        if ($request->has('from_home')) {
+            return view('home.userpage', compact('products', 'search_text'));
+        } else {
+            return view('home.all_products', compact('products', 'search_text'));
+        }
+    }
+
+    public function products(Request $request)
+    {
+        $products = Product::paginate(6);
+        return view('home.all_products', compact('products'));
     }
 }

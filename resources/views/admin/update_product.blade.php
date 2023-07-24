@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     {{--    dùng để dùng được css không có thì css không được --}}
-    <base href="/public">
     @include('admin.css')
     <style>
         .div_center {

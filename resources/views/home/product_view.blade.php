@@ -1,14 +1,13 @@
-<section class="product_section layout_padding" style="background-color: rgba(0,58,25,0.43)">
+<section class="product_section layout_padding" style="background-color: rgba(5,246,236,0.11)">
     <div class="container">
         <div class="heading_container heading_center">
             <h2>
-                Our <span>products</span>
+                All <span>products</span>
             </h2>
-            <br><br>
+            <br>
             <div>
                 <form action="{{url('product_search')}}" method="GET">
                     @csrf
-                    <input type="hidden" name="from_home" value="true">
                     <label>
                         <input style="width: 500px" type="text" name="search" placeholder="Search for something">
                     </label>

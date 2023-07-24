@@ -72,4 +72,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 4. npm run dev
 5. composer require stripe/stripe-php
 6. composer require barryvdh/laravel-dompdf
-7. 
+7. composer require realrashid/sweet-alaert

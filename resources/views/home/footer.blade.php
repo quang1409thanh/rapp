@@ -5,7 +5,7 @@
                 <div class="full">
                     <div class="logo_footer">
                         <a href="#">
-                            <img width="160" src="images/hi.gif" alt="#" />
+                            <img width="160" src="/images/hi.gif" alt="#" />
                         </a>
                     </div>
                     <div class="information_f">

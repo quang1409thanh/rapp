@@ -12,7 +12,7 @@
                         <div class="img_container">
                             <div class="img-box">
                                 <div class="img_box-inner">
-                                    <img src="images/client.jpg" alt="">
+                                    <img src="/images/client.jpg" alt="">
                                 </div>
                             </div>
                         </div>
@@ -24,7 +24,9 @@
                                 Customer
                             </h6>
                             <p>
-                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
+                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis
+                                reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus
+                                ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
                             </p>
                         </div>
                     </div>
@@ -34,7 +36,7 @@
                         <div class="img_container">
                             <div class="img-box">
                                 <div class="img_box-inner">
-                                    <img src="images/client.jpg" alt="">
+                                    <img src="/images/client.jpg" alt="">
                                 </div>
                             </div>
                         </div>
@@ -46,7 +48,9 @@
                                 Customer
                             </h6>
                             <p>
-                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
+                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis
+                                reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus
+                                ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
                             </p>
                         </div>
                     </div>
@@ -56,7 +60,7 @@
                         <div class="img_container">
                             <div class="img-box">
                                 <div class="img_box-inner">
-                                    <img src="images/client.jpg" alt="">
+                                    <img src="/images/client.jpg" alt="">
                                 </div>
                             </div>
                         </div>
@@ -68,7 +72,9 @@
                                 Customer
                             </h6>
                             <p>
-                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
+                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis
+                                reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus
+                                ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
                             </p>
                         </div>
                     </div>

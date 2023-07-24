@@ -19,7 +19,7 @@
         @endif
         <div class="box">
             <div class="img-box" style="padding-top: 20px">
-                <img src="product/{{$product->image}}" alt="">
+                <img src="/product/{{$product->image}}" alt="">
             </div>
             <div class="detail-box">
                 <h5>
@@ -76,8 +76,7 @@
     </div>
 </div>
 {{--comment and reply start--}}
-
-<div style="text-align: center; padding-bottom:30px;">
+<div style="text-align: center; padding-bottom:30px;padding-left: 20%; padding-right: 20%">
     <h1 style="font-size: 30px; text-align: center; padding-bottom: 20px; padding-top: 20px">
         Comments
     </h1>
@@ -88,6 +87,12 @@
 </textarea>
         </label>
         <br>
+        @if (session('message'))
+            <div class="alert alert-success" >
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                {{ session('message') }}
+            </div>
+        @endif
         <input type="submit" class="btn btn-primary" value="Comment">
     </form>
 
@@ -114,7 +119,7 @@
                                     <p>{{$reply->reply}}</p>
                                     <a style="color: blue" href="javascript::void(0);" onclick="reply(this)"
                                        Comment_id= {{$comment->id}}>Reply</a>
-{{--                                    todo: hiện thị các thuộc tính của cmt và reply--}}
+                                    {{--                                    todo: hiện thị các thuộc tính của cmt và reply--}}
                                     <br>
                                 </div>
                             @endif
