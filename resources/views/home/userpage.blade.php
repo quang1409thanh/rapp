@@ -32,6 +32,7 @@
 @include('home.footer')
 <!-- footer end -->
 @include('home.copyright')
+
 @include('home.script')
 </body>
 </html>

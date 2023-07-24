@@ -1,0 +1,24 @@
+để cập nhật lại 1 bảng ví dụ cập nhật bảng Reply và thêm product_Id thì chạy như sau
+php artisan make:migration add_product_id_to_replies_table --table=replies
+sau đó cập nhật thêm hàm thêm
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddProductIdToRepliesTable extends Migration
+{
+    public function up()
+    {
+        Schema::table('replies', function (Blueprint $table) {
+            $table->unsignedBigInteger('product_id')->nullable();
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('replies', function (Blueprint $table) {
+            $table->dropColumn('product_id');
+        });
+    }
+}
+

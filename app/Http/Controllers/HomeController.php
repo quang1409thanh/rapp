@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -52,7 +54,15 @@ class HomeController extends Controller
     public function detail_product($id)
     {
         $product = Product::find($id);
-        return view('home.detail_product', compact('product'));
+        if (Auth::id()) {
+            $comments = Comment::where('product_id', '=', $id)->orderByDesc('name')->get();
+
+            $replies = Reply::where('product_id', '=', $id)->get();
+        } else {
+            $comments = null;
+            $replies = null;
+        }
+        return view('home.detail_product', compact('product', 'comments', 'replies'));
     }
 
     public function add_cart(Request $request, $id)
@@ -176,22 +186,55 @@ class HomeController extends Controller
         return back();
     }
 
-    public function show_order(){
-        if(Auth::id()){
+    public function show_order()
+    {
+        if (Auth::id()) {
             $user = Auth::user();
-            $userid = $user -> id;
+            $userid = $user->id;
             $orders = Order::where('user_id', '=', $userid)->get();
             return view('home.order', compact('orders'));
-        }
-        else {
+        } else {
             return view('login');
         }
     }
 
-    public function cancel_order($id) {
+    public function cancel_order($id)
+    {
         $order = Order::find($id);
-        $order -> delivery_status = 'Bạn đã xóa đơn hàng';
-        $order -> save();
-        return redirect() -> back();
+        $order->delivery_status = 'Bạn đã xóa đơn hàng';
+        $order->save();
+        return redirect()->back();
+    }
+
+    public function add_comment(Request $request, $id)
+    {
+        if (Auth::id()) {
+            $comment = new Comment();
+            $comment->name = Auth::user()->name;
+            $comment->user_id = Auth::user()->id;
+            $comment->comment = $request->comment;
+            $comment->product_id = $id;
+            $comment->save();
+
+            return redirect()->back();
+        } else {
+            return redirect('login');
+        }
+    }
+
+    public function add_reply(Request $request, $id)
+    {
+        if (Auth::id()) {
+            $reply = new Reply();
+            $reply->name = Auth::user()->name;
+            $reply->user_id = Auth::user()->id;
+            $reply->comment_id = $request->commentId;
+            $reply->reply = $request->reply;
+            $reply->product_id = $id;
+            $reply->save();
+            return redirect()->back();
+        } else {
+            return redirect('login');
+        }
     }
 }
