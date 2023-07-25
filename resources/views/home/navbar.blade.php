@@ -36,11 +36,52 @@
                         <a class="nav-link" href="contact.html">Contact</a>
                     </li>
                     <li class="nav-item" style="padding-top: 3%">
-                        <a class="nav-link" href="{{url('show_cart')}}">Cart</a>
+                        <a class="nav-link" href="{{ url('show_cart') }}">Cart
+                            @if(isset($total_carts) && $total_carts != null)
+                                <span id="cart-count"></span>
+                                <script>
+                                    var total_cart = 0;
+                                    @if($total_carts > 0)
+                                        total_cart = {{ $total_carts }};
+                                    @endif
+                                    document.getElementById('cart-count').textContent = total_cart;
+                                </script>
+                            @endif
+                        </a>
                     </li>
                     <li class="nav-item" style="padding-top: 3%">
-                        <a class="nav-link" href="{{url('show_order')}}">Order</a>
+                        <a class="nav-link" href="{{ url('show_order') }}">Order
+                            @if(isset($total_orders) && $total_orders != null)
+                                <span id="order-count"></span>
+                                <script>
+                                    var total_order = 0;
+                                    @if($total_orders > 0)
+                                        total_order = {{ $total_orders }};
+                                    @endif
+                                    document.getElementById('order-count').textContent = total_order;
+                                </script>
+                            @endif
+                        </a>
                     </li>
+                    <style>
+                        #cart-count {
+                            background-color: #ff0000;
+                            color: #ffffff;
+                            border-radius: 50%;
+                            padding: 2px 5px;
+                            font-size: 0.8em;
+                            vertical-align: top;
+                        }
+
+                        #order-count {
+                            background-color: #ff0000;
+                            color: #ffffff;
+                            border-radius: 50%;
+                            padding: 2px 5px;
+                            font-size: 0.8em;
+                            vertical-align: top;
+                        }
+                    </style>
                     @if (Route::has('login'))
                         @auth
                             <li style="padding-top: 3%">

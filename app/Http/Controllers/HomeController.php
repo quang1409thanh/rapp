@@ -21,8 +21,17 @@ class HomeController extends Controller
 {
     public function index()
     {
+        if (Auth::id()) {
+            $user = Auth::user();
+            $user_id = $user->id;
+            $total_orders = Order::where('user_id', '=', $user_id)->count();
+            $total_carts = Cart::where('user_id', '=', $user_id)->count();;
+        } else {
+            $total_orders = null;
+            $total_carts = null;
+        }
         $products = Product::paginate(6);
-        return view('home.userpage', compact('products'));
+        return view('home.userpage', compact('products', 'total_orders', 'total_carts'));
         //TODO: fix khi ở trạng thái admin nhưng nếu gõ url "/" thì sẽ hiện ra index này -> fix về trang admin
     }
 
@@ -47,27 +56,47 @@ class HomeController extends Controller
                 }
             }
             return view('admin.home', compact('total_product', 'total_orders', 'total_customers', 'revenue', 'order_delivered', 'order_processing'));
+        } else if ($usertype == '0') {
+            $products = Product::paginate(6);
+            if (Auth::id()) {
+                $user = Auth::user();
+                $user_id = $user->id;
+                $total_orders = Order::where('user_id', '=', $user_id)->count();
+                $total_carts = Cart::where('user_id', '=', $user_id)->count();;
+            } else {
+                $total_orders = null;
+                $total_carts = null;
+            }
+            return view('home.userpage', compact('products', 'total_orders', 'total_carts'));
         } else {
             $products = Product::paginate(6);
             return view('home.userpage', compact('products'));
         }
     }
 
-    public function detail_product($id)
+
+    public
+    function detail_product($id)
     {
         $product = Product::find($id);
         if (Auth::id()) {
+            $user = Auth::user();
+            $user_id = $user->id;
             $comments = Comment::where('product_id', '=', $id)->orderByDesc('name')->get();
-
             $replies = Reply::where('product_id', '=', $id)->get();
+            $total_orders = Order::where('user_id', '=', $user_id)->count();
+            $total_carts = Cart::where('user_id', '=', $user_id)->count();;
         } else {
             $comments = null;
             $replies = null;
+            $total_orders = null;
+            $total_carts = null;
         }
-        return view('home.detail_product', compact('product', 'comments', 'replies'));
+        return view('home.detail_product', compact('product', 'comments', 'replies', 'total_orders', 'total_carts'));
     }
 
-    public function add_cart(Request $request, $id)
+    public
+    function add_cart(Request $request, $id)
     {
         if (Auth::id()) {
             $user = Auth::user();
@@ -117,26 +146,31 @@ class HomeController extends Controller
         }
     }
 
-    public function show_cart()
+    public
+    function show_cart()
     {
         if (Auth::id()) {
             $id = Auth::user()->id;
             $cart = Cart::where('user_id', '=', $id)->get();
-            return view('home.show_cart', compact('cart'));
+            $total_orders = Order::where('user_id', '=', $id)->count();
+            $total_carts = Cart::where('user_id', '=', $id)->count();;
+            return view('home.show_cart', compact('cart', 'total_orders', 'total_carts'));
 
         } else {
             return redirect('login');
         }
     }
 
-    public function remove_cart($id)
+    public
+    function remove_cart($id)
     {
         $cart = Cart::find($id);
         $cart->delete();
         return redirect()->back();
     }
 
-    public function cash_order()
+    public
+    function cash_order()
     {
         $user = Auth::user();
         $userid = $user->id;
@@ -166,12 +200,14 @@ class HomeController extends Controller
             return redirect()->back()->with('message', 'Giỏ hàng rỗng, xin vui lòng thêm sản phẩm vào giỏ hàng!!!')->with('url', '/');
     }
 
-    public function stripe($totalprice)
+    public
+    function stripe($totalprice)
     {
         return view('home.stripe', compact('totalprice'));
     }
 
-    public function stripePost(Request $request, $totalprice)
+    public
+    function stripePost(Request $request, $totalprice)
     {
         if ($totalprice > 0) {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -192,19 +228,23 @@ class HomeController extends Controller
 
     }
 
-    public function show_order()
+    public
+    function show_order()
     {
         if (Auth::id()) {
             $user = Auth::user();
             $userid = $user->id;
-            $orders = Order::where('user_id', ' = ', $userid)->get();
-            return view('home.order', compact('orders'));
+            $orders = Order::where('user_id', '=', $userid)->get();
+            $total_orders = Order::where('user_id', '=', $userid)->count();
+            $total_carts = Cart::where('user_id', '=', $userid)->count();;
+            return view('home.order', compact('orders', 'total_orders', 'total_carts'));
         } else {
             return redirect('login');
         }
     }
 
-    public function cancel_order($id)
+    public
+    function cancel_order($id)
     {
         $order = Order::find($id);
         $order->delivery_status = 'Bạn đã xóa đơn hàng';
@@ -212,7 +252,8 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function add_comment(Request $request, $id)
+    public
+    function add_comment(Request $request, $id)
     {
         if (Auth::id()) {
             if ($request->comment != null) {
@@ -231,7 +272,8 @@ class HomeController extends Controller
         }
     }
 
-    public function add_reply(Request $request, $id)
+    public
+    function add_reply(Request $request, $id)
     {
         if (Auth::id()) {
             $reply = new Reply();
@@ -247,7 +289,8 @@ class HomeController extends Controller
         }
     }
 
-    public function product_search(Request $request)
+    public
+    function product_search(Request $request)
     {
         $search_text = $request->search;
 
@@ -257,15 +300,34 @@ class HomeController extends Controller
             })
             ->paginate(6);
         if ($request->has('from_home')) {
-            return view('home.userpage', compact('products', 'search_text'));
+            if (Auth::id()) {
+                $user = Auth::user();
+                $user_id = $user->id;
+                $total_orders = Order::where('user_id', '=', $user_id)->count();
+                $total_carts = Cart::where('user_id', '=', $user_id)->count();;
+            } else {
+                $total_orders = null;
+                $total_carts = null;
+            }
+            return view('home.userpage', compact('products', 'search_text', 'total_orders', 'total_carts'));
         } else {
             return view('home.all_products', compact('products', 'search_text'));
         }
     }
 
-    public function products(Request $request)
+    public
+    function products(Request $request)
     {
         $products = Product::paginate(6);
-        return view('home.all_products', compact('products'));
+        if (Auth::id()) {
+            $user = Auth::user();
+            $user_id = $user->id;
+            $total_orders = Order::where('user_id', '=', $user_id)->count();
+            $total_carts = Cart::where('user_id', '=', $user_id)->count();;
+        } else {
+            $total_orders = null;
+            $total_carts = null;
+        }
+        return view('home.all_products', compact('products', 'total_orders', 'total_carts'));
     }
 }

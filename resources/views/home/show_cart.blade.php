@@ -56,6 +56,7 @@
             <h1 style="font-size: 28px; padding-bottom: 20px">Giỏ hàng của bạn !~!</h1>
             <br>
         </header>
+
         @if (session('message'))
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
@@ -65,34 +66,36 @@
                 @endif
             </div>
         @endif
-
-        <table>
-            <tr class="title">
-                <th>Product Title</th>
-                <th>Product Quantity</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Action</th>
-            </tr>
-            <?php $totalprice = 0; ?>
-
-
-            @foreach($cart as $cart)
-                <tr>
-                    <td>{{$cart->product_title}}</td>
-                    <td>{{$cart->quantity}}</td>
-                    <td>${{$cart->price}}</td>
-                    <td><img class="img_deg" src="/product/{{$cart->image}}"></td>
-                    <td>
-                        <a class="btn btn-danger" onclick="confirmation(event)"
-                           href="{{url('remove_cart',$cart->id)}}">
-                            Remove
-                        </a>
-                    </td>
+        <?php $totalprice = 0; ?>
+        @if($cart->isEmpty())
+            <div style="font-size: 40px;color: blue">Chưa có sản phầm nào trong giỏ hàng cả!!</div>
+        @else
+            <table>
+                <tr class="title">
+                    <th>Product Title</th>
+                    <th>Product Quantity</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Action</th>
                 </tr>
-                    <?php $totalprice = $totalprice + $cart->price * $cart->quantity ?>
-            @endforeach
-        </table>
+                @foreach($cart as $cart)
+                    <tr>
+                        <td>{{$cart->product_title}}</td>
+                        <td>{{$cart->quantity}}</td>
+                        <td>${{$cart->price}}</td>
+                        <td><img class="img_deg" src="/product/{{$cart->image}}"></td>
+                        <td>
+                            <a class="btn btn-danger" onclick="confirmation(event)"
+                               href="{{url('remove_cart',$cart->id)}}">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                        <?php $totalprice = $totalprice + $cart->price * $cart->quantity ?>
+                @endforeach
+            </table>
+
+        @endif
         {{--    <div>--}}
         <div>
             <h1 class="total_deg"> Total Price:: ${{$totalprice}}</h1>
@@ -114,8 +117,8 @@
         var urlToRedirect = ev.currentTarget.getAttribute('href');
         console.log(urlToRedirect);
         swal({
-            title: "Are you sure to cancel this product",
-            text: "You will not be able to revert this!",
+            title: "Bạn muốn xóa đơng hàng này ?",
+            text: "Bạn không thể khôi phục lại nó!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
