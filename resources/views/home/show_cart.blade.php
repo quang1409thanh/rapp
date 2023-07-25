@@ -1,5 +1,8 @@
 <!doctype html>
 <html lang="en">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @include('home.head')
 <style>
     table {
@@ -42,6 +45,8 @@
 
 </style>
 <body>
+@include('sweetalert::alert')
+
 <div class="hero_area" style="background-color: rgba(0,255,21,0.1);">
     <!-- header section strats -->
     @include('home.navbar')
@@ -79,7 +84,7 @@
                     <td>${{$cart->price}}</td>
                     <td><img class="img_deg" src="/product/{{$cart->image}}"></td>
                     <td>
-                        <a class="btn btn-danger" onclick="return confirm('Bạn muốn xóa khỏi giỏ hàng ?')"
+                        <a class="btn btn-danger" onclick="confirmation(event)"
                            href="{{url('remove_cart',$cart->id)}}">
                             Remove
                         </a>
@@ -103,6 +108,25 @@
 @include('home.footer')
 <!-- footer end -->
 @include('home.copyright')
+<script>
+    function confirmation(ev) {
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href');
+        console.log(urlToRedirect);
+        swal({
+            title: "Are you sure to cancel this product",
+            text: "You will not be able to revert this!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willCancel) => {
+                if (willCancel) {
+                    window.location.href = urlToRedirect;
+                }
+            });
+    }
+</script>
 @include('home.script')
 </body>
 </html>

@@ -1,3 +1,5 @@
+@include('sweetalert::alert')
+
 <section class="product_section layout_padding" style="background-color: rgba(5,246,236,0.11)">
     <div class="container">
         <div class="heading_container heading_center">

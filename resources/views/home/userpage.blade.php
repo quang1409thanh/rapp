@@ -2,6 +2,8 @@
 <html lang="en">
 @include('home.head')
 <body>
+@include('sweetalert::alert')
+
 <div class="hero_area">
     <!-- header section strats -->
     @include('home.navbar')

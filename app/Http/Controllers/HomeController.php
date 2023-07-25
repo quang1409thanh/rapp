@@ -15,6 +15,8 @@ use function PHPUnit\Framework\isEmpty;
 use Session;
 use Stripe;
 
+use RealRashid\SweetAlert\Facades\Alert;
+
 class HomeController extends Controller
 {
     public function index()
@@ -85,6 +87,7 @@ class HomeController extends Controller
                     $cart->price = $price + $product->price * $request->quantity;
                 }
                 $cart->save();
+                Alert::info('Bạn đã cập nhật thành ' . $quantity . ' số lượng cho sản phẩm này rồi bro!');
                 return redirect()->back()->with('message', 'Bạn đã cập nhật thêm ' . $quantity . ' số lượng cho sản phẩm này rồi bro!');
             } else {
                 $cart = new cart;
@@ -105,6 +108,7 @@ class HomeController extends Controller
                 $cart->Product_id = $product->id;
                 $cart->quantity = $request->quantity;
                 $cart->save();
+                Alert::info('Bạn đã thêm thành công vào giỏ hàng rồi bro !');
                 return redirect()->back()->with('message', 'Bạn đã thêm thành công vào giỏ hàng rồi bro !');
 
             }

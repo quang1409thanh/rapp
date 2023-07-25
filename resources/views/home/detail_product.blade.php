@@ -8,6 +8,7 @@
     }
 </style>
 <body>
+@include('sweetalert::alert')
 @include('home.navbar')
 <div style="background-color: rgba(44,170,225,0.29)">
     <div class="col-sm-6 col-md-4 col-lg-4" style="margin:auto; width: 50%; padding: 30px ">
