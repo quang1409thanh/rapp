@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('quantity')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->integer('discount')->nullable();
-            $table->integer('rating')->nullable();
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories');
         });
