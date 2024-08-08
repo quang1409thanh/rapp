@@ -70,7 +70,6 @@
                         <td>{{$data->category_name}}</td>
                         <td>{{$product-> price}}</td>
                         <td>{{$product->discount}} %</td>
-{{--                        todo: lấy ảnh hiện thị để sau phát triển--}}
                         <td>
                             <a  class="btn btn-primary" href="{{url('#')}}">Detail</a>
                         </td>

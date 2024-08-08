@@ -55,16 +55,15 @@ class AdminController extends Controller
             return redirect()->back()->with('message', 'Đã Xóa Thành Công Danh Mục: ' . $s);
         } else
             return redirect('login');
-
     }
 
-//    public function edit_category($id){
-//        $data = category::find($id);
-//        $s = $data->category_name;
-//        $data->delete();
-//        return redirect()->back()->with('message', 'Đã Xóa Thành Công Danh Mục: ' . $s);
-//    }
-//TODO: thêm chỉnh sửa danh mục để sau.
+    //    public function edit_category($id){
+    //        $data = category::find($id);
+    //        $s = $data->category_name;
+    //        $data->delete();
+    //        return redirect()->back()->with('message', 'Đã Xóa Thành Công Danh Mục: ' . $s);
+    //    }
+    //TODO: thêm chỉnh sửa danh mục để sau.
     public
     function view_product()
     {
@@ -73,15 +72,12 @@ class AdminController extends Controller
             return view('admin.product', compact('category'));
         } else
             return redirect('login');
-
-
     }
 
     public
     function add_product(Request $request)
     {
         if (Auth::id()) {
-
             $product = new product;
             $product->title = $request->title;
             $product->description = $request->description;
@@ -106,8 +102,6 @@ class AdminController extends Controller
             // todo: có thể sử dụng cách đặt tên ảnh khác để tránh xung đột file
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -116,11 +110,10 @@ class AdminController extends Controller
         if (Auth::id()) {
 
             $product = Product::all();
+            dd($product);
             return view('admin.show_product', compact('product'));
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -146,8 +139,6 @@ class AdminController extends Controller
             return redirect()->back()->with('message', 'Đã Xóa Thành Công Sản Phẩm: ' . $s);
         } else
             return redirect('login');
-
-
     }
 
 
@@ -161,8 +152,6 @@ class AdminController extends Controller
             return view('admin.update_product', compact('product'), compact('category'));
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -202,8 +191,6 @@ class AdminController extends Controller
             // todo: có thể sử dụng cách đặt tên ảnh khác để tránh xung đột file
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -215,8 +202,6 @@ class AdminController extends Controller
             return view('admin.order', compact('orders'));
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -232,8 +217,6 @@ class AdminController extends Controller
             //TODO: sửa lại để khi load lại trang thì vẫn ở trạng thái hiện tại
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -254,8 +237,6 @@ class AdminController extends Controller
             }
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -266,12 +247,10 @@ class AdminController extends Controller
             $order = Order::find($id);
             $filename = 'order_details' . $order->user_id . $order->id . '.pdf';
             $pdf = PDF::loadView('admin.pdf', compact('order'));
-//        return  view('admin.pdf', compact('order'));
+            //        return  view('admin.pdf', compact('order'));
             return $pdf->download($filename);
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -286,8 +265,6 @@ class AdminController extends Controller
             return view('admin.email_info', compact('order', 'notifications'));
         } else
             return redirect('login');
-
-
     }
 
     public
@@ -320,7 +297,7 @@ class AdminController extends Controller
             // Sử dụng Notification Facade để gửi thông báo
             FacadeNotification::send($order, new SendEmailNotification($details));
 
-            return redirect()->back();//TODO: hiển thị thông báo đã gửi email
+            return redirect()->back(); //TODO: hiển thị thông báo đã gửi email
         } else {
             return redirect('login');
         }
@@ -350,7 +327,7 @@ class AdminController extends Controller
                 // Sắp xếp theo giá (giảm dần)
                 $orders = Order::orderBy('price', 'desc')->get();
                 break;
-            // Xử lý các tùy chọn sắp xếp khác nếu cần
+                // Xử lý các tùy chọn sắp xếp khác nếu cần
             case 'processing':
                 $orders = Order::Where('delivery_status', 'Like', 'Đang Xử Lý')->get();
                 break;
@@ -363,5 +340,4 @@ class AdminController extends Controller
         }
         return view('admin.order', compact('orders', 'sortBy', 'searchQuery'));
     }
-
 }

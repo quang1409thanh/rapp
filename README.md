@@ -1,71 +1,6 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # rapp
-## package:
+
+## Cách chạy ở local
 1. c//omposer require laravel/jetstream
 2. php artisan jetstream:install livewire 
 3. npm install
@@ -73,3 +8,46 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 5. composer require stripe/stripe-php
 6. composer require barryvdh/laravel-dompdf
 7. composer require realrashid/sweet-alaert
+
+## cach deploy len heroku
+cần có tài khoản heroku
+### 1.1 `đăng nhập`
+    heroku login
+### 1.2 `khởi tạo 1 repo ở local`
+    git init -b main
+    git add .
+    git commit -m "new laravel project"
+### 1.3 `tạo procfile`
+    echo "web: heroku-php-apache2 public/" > Procfile
+    git add .
+    git commit -m "Procfile for Heroku"
+### 1.4 `create app`
+    heroku create thanhyk14
+### 1.5 `add build package`
+    heroku buildpacks:add --index 1 heroku/nodejs
+    heroku buildpacks:add --index 2 heroku/php
+
+### 1.6 `git push heroku main` <deploy>
+
+### 1.7 `config`
+chạy cái này trước
+
+    heroku config:set APP_NAME=app
+    heroku config:set APP_ENV=production
+    heroku config:set APP_KEY=base64:h1ee74tBoTw5x8gJGaYF3K2zjB5rW2i5OPClUumEjtA=
+    heroku config:set APP_DEBUG=true
+    heroku config:set APP_URL=https://demo-30-7-2023-75ad8092021d.herokuapp.com/
+    `heroku buildpacks:remove heroku/nodejs`¹
+
+mysql://be9443265c3eb0:492defba@us-cdbr-east-06.cleardb.net/heroku_3399bac60271e97?reconnect=true
+
+        heroku config:set DB_CONNECTION=mysql
+        heroku config:set DB_HOST=us-cdbr-east-06.cleardb.net
+        heroku config:set DB_PORT=3306
+        heroku config:set DB_DATABASE=heroku_3399bac60271e97
+        heroku config:set DB_USERNAME=be9443265c3eb0
+        heroku config:set DB_PASSWORD=492defba
+        run migrate and import file sql
+        heroku run php artisan migrate
+        đang import file sql
+

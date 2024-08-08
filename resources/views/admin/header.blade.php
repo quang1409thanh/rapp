@@ -10,9 +10,7 @@
             </button>
             <ul class="navbar-nav w-100">
                 <li class="nav-item w-100">
-                    <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-                        <input type="text" class="form-control" placeholder="Search products">
-                    </form>
+                    <H1>Trang làm việc của Quản lý công ty</H1>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-nav-right">
@@ -152,7 +150,6 @@
                 </li>
                 <li>
                     <x-app-layout>
-
                     </x-app-layout>
                 </li>
             </ul>
